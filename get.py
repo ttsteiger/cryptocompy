@@ -3,28 +3,33 @@ import json
 import requests
 
 
-def get_coinlist():
+def get_coin_information(coins='all'):
 	"""
 	Return general information about all the coins available on 
-	cryptocompare.com. The function returns a dictionary with its keys being 
-	the coin symbols and the values being dictionaries containing information
-	about the specified coin.
+	cryptocompare.com.
+	
+	Args:
+		coins: Default of 'all' returns complete list. Otherwise a list of coin
+			symbols can be used.
 
-	The following parameters will be returned for each coin:
-
-	'Algorithm'            - 
-	'CoinName'
-	'FullName'
-	'FullyPremined'
-	'Id'
-	'ImageUrl'
-	'Name'
-	'PreMinedValue'
-	'ProofType'
-	'SortOrder'
-	'TotalCoinsFreeFloat'
-	'TotalCoinSupply'
-	'Url'
+	Returns:
+		The function returns a dictionairy containing containing dictionairies
+		for the coins specified by the input. The key of the top dictionary
+		corresponds to the coin symbol. Each coin dictionary contains the 
+		following key and value pairs:
+			'Algorithm' 
+			'CoinName'
+			'FullName'
+			'FullyPremined'
+			'Id'
+			'ImageUrl'
+			'Name'
+			'PreMinedValue'
+			'ProofType'
+			'SortOrder'
+			'TotalCoinsFreeFloat'
+			'TotalCoinSupply'
+			'Url'
 	"""
 	
 	# http request
@@ -39,10 +44,24 @@ def get_coinlist():
 
 	print(message)
 
+	# coins specified
+	if coins != 'all':
+		coin_data = {c: coin_data[c] for c in coins}
+
 	return coin_data
 
-if __name__ == "__main__":
-	coin_data = get_coinlist()
 
-	print(len(coin_data.keys()))
-	print(coin_data["BTC"])
+def get_
+
+
+
+if __name__ == "__main__":
+
+	# examples get_coin_information()
+	coin_data = get_coin_information(["BTC", "ETH"])
+	print(coin_data)
+
+	coin_data = get_coin_information()
+	print(list(coin_data.keys())[:10])
+
+	# examples
