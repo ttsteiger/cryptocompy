@@ -9,10 +9,10 @@ To do:
 
 ## Functions
 
-### get_coin_information(coins='all')
+#### get_coin_information(coins='all')
 
-### get_latest_price(fsyms, tsyms, e='all', full=False, format='raw')
+#### get_latest_price(fsyms, tsyms, e='all', full=False, format='raw')
 
-### get_latest_average(fsym, tsym, markets, format='raw')
+#### get_latest_average(fsym, tsym, markets, format='raw')
 
-### get_day_average(fsym, tsym, e='all', avgType='HourVWAP', UTCHourDiff=0)
+#### get_day_average(fsym, tsym, e='all', avgType='HourVWAP', UTCHourDiff=0)
