@@ -43,7 +43,6 @@ def get_histo(scale, fsym, tsym, e='all', aggregate=1, limit=30):
 	return data['Data']
 
 
-
 if __name__ == "__main__":
 	
 	data = get_histo("day", "ETH", "EUR")
