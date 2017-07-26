@@ -2,6 +2,8 @@
 import json
 import requests
 
+from helper_functions import build_url
+
 def get_latest_price(fsyms, tsyms, e='all', full=False, format='raw'):
 	"""
 	Get latest full or compact price information in display or raw format for 
@@ -45,19 +47,12 @@ def get_latest_price(fsyms, tsyms, e='all', full=False, format='raw'):
 
 	# full set to True
 	if not full:
-		base_url = "https://min-api.cryptocompare.com/data/pricemulti?"
+		func = 'pricemulti'
 	else:
-		base_url = "https://min-api.cryptocompare.com/data/pricemultifull?"
+		func = 'pricemultifull'
 	
-	fsyms_url = "fsyms={}".format(",".join(fsyms))
-	tsyms_url = "tsyms={}".format(",".join(tsyms))
-	
-	url = "{}{}&{}".format(base_url, fsyms_url, tsyms_url)
-
-	# exchange specified
-	if e != 'all':
-		e_url = "e={}".format(e)
-		url = "{}&{}".format(url, e_url)
+	# build url
+	url = build_url(func, fsyms=fsyms, tsyms=tsyms, e=e)
 
 	# http request
 	r = requests.get(url)
@@ -107,12 +102,9 @@ def get_latest_average(fsym, tsym, markets, format='raw'):
 		 'LASTTRADEID': ...,
 		 'LASTVOLUME': ...}
 	"""
-	base_url = "https://min-api.cryptocompare.com/data/generateAvg?"
-	fsym_url = "fsym={}".format(fsym)
-	tsym_url = "tsym={}".format(tsym)
-
-	markets_url = "markets={}".format(",".join(markets))
-	url = "{}{}&{}&{}".format(base_url, fsym_url, tsym_url, markets_url)
+	
+	# build url 
+	url = build_url('generateAvg', fsym=fsym, tsym=tsym, markets=markets)
 
 	# http request
 	r = requests.get(url)
@@ -120,10 +112,10 @@ def get_latest_average(fsym, tsym, markets, format='raw'):
 	# decode to json
 	data = r.json()
 
-	# if format == 'raw':
-	# 	data = data['RAW']
-	# elif format == 'display':
-	# 	data = data['DISPLAY']
+	if format == 'raw':
+		data = data['RAW']
+	elif format == 'display':
+		data = data['DISPLAY']
 
 	return data
 
@@ -150,26 +142,8 @@ def get_day_average(fsym, tsym, e='all', avgType='HourVWAP', UTCHourDiff=0):
 	"""
 
 	# build url
-	base_url = "https://min-api.cryptocompare.com/data/dayAvg?"
-	fsym_url = "fsym={}".format(fsym)
-	tsym_url = "tsym={}".format(tsym)
-
-	url = "{}{}&{}".format(base_url, fsym_url, tsym_url)
-
-	# exchange specified
-	if e != 'all':
-		e_url = "e={}".format(e)
-		url = "{}&{}".format(url, e_url)
-
-	# averageType specified
-	if avgType != 'HourVWAP':
-		at_url = "avgType={}".format(avgType)
-		url = "{}&{}".format(url, at_url)
-
-	# UTCHourDiff specified
-	if UTCHourDiff != 0:
-		uhd_url = "UTCHourDiff={}".format(UTCHourDiff)
-		url = "{}&{}".format(url, uhd_url)
+	url = build_url('dayAvg', fsym=fsym, tsym=tsym, e=e, avgType=avgType, 
+	                UTCHourDiff=UTCHourDiff)
 
 	# http request
 	r = requests.get(url)

@@ -2,6 +2,7 @@
 import json
 import requests
 
+from helper_functions import build_url
 
 def get_price_historical(fsym, tsyms, ts, e='all'):
 	"""
@@ -18,22 +19,14 @@ def get_price_historical(fsym, tsyms, ts, e='all'):
 	"""
 
 	# build url
-	base_url = "https://min-api.cryptocompare.com/data/pricehistorical?"
-	fsym_url = "fsym={}".format(fsym)
-	tsyms_url = "tsyms={}".format(",".join(tsyms))
-	ts_url = "ts={}".format(ts)
+	url = build_url("pricehistorical", fsym=fsym, tsyms=tsyms, ts=ts, e=e)
 
-	url = "{}{}&{}&{}".format(base_url, fsym_url, tsyms_url, ts_url)
+	print(url)
 
-	# exchange specified
-	if e != 'all':
-		e_url = "e={}".format(e)
-		url = "{}&{}".format(url, e_url)
-
-	# http request
+	# # http request
 	r = requests.get(url)
 
-	# decode to json
+	# # decode to json
 	data = r.json()
 
 	return data

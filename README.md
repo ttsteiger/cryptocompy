@@ -5,7 +5,8 @@ https://www.cryptocompare.com/api/#-api-data-price-
 
 To do:
 - add tryConversion parameter
-
+- wrap url build into function
+- mamke oo approach? base object with build_url, add_to_url, get_data methods
 
 ## Functions
 

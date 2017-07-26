@@ -2,6 +2,8 @@
 import json
 import requests
 
+from helper_functions import build_url
+
 def get_coin_list(coins='all'):
 	"""
 	Get general information about all the coins available on 
@@ -32,7 +34,7 @@ def get_coin_list(coins='all'):
 	"""
 	
 	# http request
-	url = "https://www.cryptocompare.com/api/data/coinlist/"
+	url = build_url('coinlist')
 	r = requests.get(url)
 
 	# data extraction
@@ -54,7 +56,7 @@ if __name__ == "__main__":
 
 	print("Examples get_coin_list()")
 	print("--------------------------------")
-	coin_data = get_coin_list(["BTC", "ETH"])
+	coin_data = get_coin_list(coins=["BTC", "ETH"])
 	print(coin_data)
 	print()
 
