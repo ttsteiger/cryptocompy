@@ -1,8 +1,9 @@
-# get_coin_list.py
+# coin_list.py
+
 import json
 import requests
 
-from helper_functions import build_url
+from helper_functions import build_url, load_data
 
 def get_coin_list(coins='all'):
 	"""
@@ -10,8 +11,8 @@ def get_coin_list(coins='all'):
 	cryptocompare.com.
 	
 	Args:
-		coins: Default of 'all' returns complete list. Otherwise a list of coin
-			symbols can be used.
+		coins: Default value of 'all' returns complete list. Otherwise a list of 
+			coin symbols can be used.
 
 	Returns:
 		The function returns a dictionairy containing individual dictionairies 
@@ -33,17 +34,9 @@ def get_coin_list(coins='all'):
 			 'Url': ...}
 	"""
 	
-	# http request
+	# load data
 	url = build_url('coinlist')
-	r = requests.get(url)
-
-	# data extraction
-	data = r.json()
-	
-	message = data["Message"]
-	data = data["Data"]
-
-	print(message)
+	data = load_data(url)['Data']
 
 	# coins specified
 	if coins != 'all':
@@ -56,10 +49,13 @@ if __name__ == "__main__":
 
 	print("Examples get_coin_list()")
 	print("--------------------------------")
+
+	# example 1
 	coin_data = get_coin_list(coins=["BTC", "ETH"])
 	print(coin_data)
 	print()
 
+	# example 2
 	coin_data = get_coin_list()
 	print(list(coin_data.keys())[:10])
 	print()

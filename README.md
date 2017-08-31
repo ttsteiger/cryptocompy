@@ -9,10 +9,16 @@ To do:
 
 ## Functions
 
-#### get_coin_information(coins='all')
+#### coin_list.py
+* get_coin_list(coins='all')
 
-#### get_latest_price(fsyms, tsyms, e='all', full=False, format='raw')
+#### price.py
+* get_latest_price(fsyms, tsyms, e='all', try_conversion=True, full=False, format='raw')
+* get_latest_average(fsym, tsym, markets='all', try_conversion=True, format='raw')
+* get_day_average(fsym, tsym, e='all', try_conversion=True, avgType='HourVWAP', UTCHourDiff=0)
 
-#### get_latest_average(fsym, tsym, markets, format='raw')
+#### price_historical.py
+* get_price_historical(fsym, tsyms, ts, markets='all', try_conversion=True)
 
-#### get_day_average(fsym, tsym, e='all', avgType='HourVWAP', UTCHourDiff=0)
+#### coin_snapshot.py
+* get_coin_snapshot()

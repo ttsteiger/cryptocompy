@@ -1,10 +1,8 @@
 # get_price_historical.py
-import json
-import requests
 
-from helper_functions import build_url
+from helper_functions import build_url, load_data
 
-def get_price_historical(fsym, tsyms, ts, e='all'):
+def get_price_historical(fsym, tsyms, ts, markets='all', try_conversion=True):
 	"""
 	
 	Get end of day price for the specified timestamp.
@@ -18,16 +16,10 @@ def get_price_historical(fsym, tsyms, ts, e='all'):
 
 	"""
 
-	# build url
-	url = build_url("pricehistorical", fsym=fsym, tsyms=tsyms, ts=ts, e=e)
-
-	print(url)
-
-	# # http request
-	r = requests.get(url)
-
-	# # decode to json
-	data = r.json()
+	# load data
+	url = build_url("pricehistorical", fsym=fsym, tsyms=tsyms, ts=ts, 
+	                markets=markets, try_conversion=try_conversion)
+	data = load_data(url)
 
 	return data
 
@@ -41,5 +33,6 @@ if __name__ == "__main__":
 	print(get_price_historical("DASH", ["USD"], ts=1492689600))
 	print()
 
-	print(get_price_historical("LTC", ["BTC", "EUR"], ts=1500768000, e="Kraken"))
+	print(get_price_historical("LTC", ["BTC", "EUR"], ts=1500768000, 
+	                           markets=["Kraken"]))
 	print()

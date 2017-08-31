@@ -1,21 +1,30 @@
-# get.py
+# price.py
+
 import json
 import requests
 
-from helper_functions import build_url
+from helper_functions import build_url, load_data
 
-def get_latest_price(fsyms, tsyms, e='all', full=False, format='raw'):
+def get_latest_price(fsyms, tsyms, e='all', try_conversion=True, full=False, 
+                     format='raw'):
 	"""
 	Get latest full or compact price information in display or raw format for 
 	the specified FROM-TO currency pairs.
 
 	Args:
 		fsyms: List of FROM symbols.
+
+
+		# allow list or single value for input
+		#
+		#
+
+
 		tsyms: List of TO symbols.
 		e: Default returns average price across all exchanges. Can be set to the
-			name of a single exchange.
+			name of a single exchange. CCAGG = Cryptocompare Aggregate
 		full: Default of False returns only the latest price. True returns the 
-			following dictionary structure:
+			following dictionary structure containing the full :
 				{'TYPE': ..., 
 			 	 'LASTVOLUME': ..., 
 			 	 'CHANGE24HOUR': ..., 
@@ -45,21 +54,17 @@ def get_latest_price(fsyms, tsyms, e='all', full=False, format='raw'):
 
 	"""
 
-	# full set to True
+	# select API function based on 'full' parameter value
 	if not full:
 		func = 'pricemulti'
 	else:
 		func = 'pricemultifull'
-	
-	# build url
-	url = build_url(func, fsyms=fsyms, tsyms=tsyms, e=e)
 
-	# http request
-	r = requests.get(url)
+	# load data
+	url = build_url(func, fsyms=fsyms, tsyms=tsyms, e=e, 
+	                try_conversion=try_conversion)
+	data = load_data(url)
 
-	# decode to json
-	data = r.json()
-	
 	#  select right format to return for full requests
 	if full and format == 'raw':
 		data = data['RAW']
@@ -69,7 +74,8 @@ def get_latest_price(fsyms, tsyms, e='all', full=False, format='raw'):
 	return data
 
 
-def get_latest_average(fsym, tsym, markets, format='raw'):
+def get_latest_average(fsym, tsym, markets='all', try_conversion=True, 
+                       format='raw'):
 	"""
 	Get the latest trading info of the requested pair as a volume weighted 
 	average based on the markets requested.
@@ -77,7 +83,7 @@ def get_latest_average(fsym, tsym, markets, format='raw'):
 	Args:
 		fsym: FROM symbol.
 		tsym: TO symbol.
-		markets: List containing the market names.
+		markets: List containing the market names. 
 		format: Default returns the 'RAW' format. Can be set to 'DISPLAY' 
 			format.
 
@@ -104,7 +110,8 @@ def get_latest_average(fsym, tsym, markets, format='raw'):
 	"""
 	
 	# build url 
-	url = build_url('generateAvg', fsym=fsym, tsym=tsym, markets=markets)
+	url = build_url('generateAvg', fsym=fsym, tsym=tsym, markets=markets,
+	                try_conversion=try_conversion)
 
 	# http request
 	r = requests.get(url)
@@ -120,7 +127,8 @@ def get_latest_average(fsym, tsym, markets, format='raw'):
 	return data
 
 
-def get_day_average(fsym, tsym, e='all', avgType='HourVWAP', UTCHourDiff=0):
+def get_day_average(fsym, tsym, e='all', try_conversion=True, 
+                    avgType='HourVWAP', UTCHourDiff=0):
 	"""
 	Get the day average price of a currency pair.
 
@@ -133,6 +141,11 @@ def get_day_average(fsym, tsym, e='all', avgType='HourVWAP', UTCHourDiff=0):
 			close price. The other option 'MidHighLow' gives the average between
 			the 24 hour high and low.
 		UTCHourdiff: 
+
+		# add 'toTs' parameter
+		#
+		#
+		#
 	
 	Returns:
 		'ConversionType' information
@@ -142,7 +155,8 @@ def get_day_average(fsym, tsym, e='all', avgType='HourVWAP', UTCHourDiff=0):
 	"""
 
 	# build url
-	url = build_url('dayAvg', fsym=fsym, tsym=tsym, e=e, avgType=avgType, 
+	url = build_url('dayAvg', fsym=fsym, tsym=tsym, e=e, 
+	                try_conversion=try_conversion, avgType=avgType, 
 	                UTCHourDiff=UTCHourDiff)
 
 	# http request
@@ -161,6 +175,8 @@ if __name__ == "__main__":
 
 	print("Examples get_latest_price()")
 	print("--------------------------------")
+	
+	# 
 	print(get_latest_price(["BTC"], ["EUR", "USD", "ETH"]))
 	print()
 
