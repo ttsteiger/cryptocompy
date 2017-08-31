@@ -8,8 +8,8 @@ def build_url(func, **kwargs):
 	"""
 	"""
 
-	if func == 'coinlist':
-		url = "https://www.cryptocompare.com/api/data/coinlist/"
+	if func in ['coinlist', 'coinsnapshot']:
+		url = "https://www.cryptocompare.com/api/data/{}?".format(func)
 	else:
 		url = "https://min-api.cryptocompare.com/data/{}?".format(func)
 	
