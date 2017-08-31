@@ -1,10 +1,13 @@
 # cryptocompare-python
 Simple wrapper for the CryptoCompare API.
 
-https://www.cryptocompare.com/api/#-api-data-price-
+https://www.cryptocompare.com/api
 
 To do:
-- add tryConversion parameter
+- add all get functions
+- complete docstrings
+- create readme with examples
+
 
 
 ## Functions
