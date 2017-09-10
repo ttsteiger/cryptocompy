@@ -6,6 +6,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 cryptocompare-python-env/
+dist/
 *.egg-info/
 
 # Jupyter Notebook
