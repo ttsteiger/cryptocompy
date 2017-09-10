@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: cryptocompare-python
+Version: 0.1
+Summary: Simple wrapper for the public Cryptocompare API.
+Home-page: https://github.com/ttsteiger/cryptocompare-python
+Author: Titian Steiger
+Author-email: titian.steiger@gmail.com
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
