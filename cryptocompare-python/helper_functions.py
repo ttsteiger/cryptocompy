@@ -1,5 +1,6 @@
 # helper_functions.py
 
+import datetime
 import json
 import requests
 
@@ -25,10 +26,17 @@ def build_url(func, **kwargs):
 			url_parts.append("tsym={}".format(value))
 		elif key == 'tsyms':
 			url_parts.append("tsyms={}".format(",".join(value)))
+		
+		# exchange
 		elif key == 'e' and value != 'all':
 			url_parts.append("e={}".format(value))
+		elif key == 'e' and value == 'all':
+			url_parts.append("e={}".format('CCCAGG'))
+		
+		# conversion
 		elif key == 'try_conversion' and not value:
 			url_parts.append("tryConversion=false")
+		
 		elif key == 'markets' and value != 'all':
 			url_parts.append("markets={}".format(",".join(value)))
 		elif key == 'avgType' and value != 'HourVWAP':
@@ -59,3 +67,16 @@ def load_data(url):
 	data = r.json()
 
 	return data
+
+
+def timestamp_to_date(ts):
+		"""Convert timestamp to nice date and time format.
+
+		Args:
+			ts: Timestamp as string.
+
+		Returns:
+			
+		"""
+		return datetime.datetime.fromtimestamp(int(ts)
+		                                       ).strftime('%Y-%m-%d %H:%M:%S')
