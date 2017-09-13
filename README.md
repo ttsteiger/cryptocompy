@@ -8,7 +8,7 @@ To do:
 - complete docstrings
 - create readme with examples
 - error handling for http requests
-
+- throw warnings for conversions
 
 
 ## Functions
