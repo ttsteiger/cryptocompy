@@ -1,58 +1,56 @@
 # price.py
 
-import json
-import requests
-
 from helper_functions import build_url, load_data, timestamp_to_date
 
 
 def get_latest_price(fsyms, tsyms, e='all', try_conversion=True, full=False, 
                      format='raw'):
-	"""
-	Get latest full or compact price information in display or raw format for 
+	"""Get latest full or compact price information in display or raw format for 
 	the specified FROM-TO currency pairs.
 
 	Args:
-		fsyms: List of FROM symbols.
-
-
-		# allow list or single value for input
-		#
-		#
-
-
-		tsyms: List of TO symbols.
+		fsyms: Single string or list of FROM symbols.
+		tsyms: Single string or list of TO symbols.
 		e: Default returns average price across all exchanges. Can be set to the
 			name of a single exchange. CCAGG = Cryptocompare Aggregate
 		full: Default of False returns only the latest price. True returns the 
-			following dictionary structure containing the full :
-				{'TYPE': ..., 
-			 	 'LASTVOLUME': ..., 
-			 	 'CHANGE24HOUR': ..., 
-			 	 'LASTUPDATE': ...,, 
-			 	 'OPEN24HOUR': ..., 
-			 	 'MKTCAP': ...,
-			 	 'FLAGS': ...,
-			 	 'LASTVOLUMETO': ...,
-			 	 'VOLUME24HOURTO': ...,
-			 	 'LASTTRADEID': ...,
-			 	 'FROMSYMBOL': ...,
-			 	 'SUPPLY': ...,
-			 	 'CHANGEPCT24HOUR': ...,
-			 	 'TOSYMBOL': ...,
-			 	 'LOW24HOUR': ...,
-			 	 'VOLUME24HOUR': ...,
-			 	 'HIGH24HOUR': ...,
-			 	 'LASTMARKET': ...,
-			 	 'PRICE': ...,
-			 	 'MARKET' ...}
+			following dictionary structure containing the full trading info:
 		format: Default returns the 'RAW' format. Can be set to 'DISPLAY' 
 			format.
 	Returns:
-		Returns a dictionary containing the latest price pairs...
+		Returns a dictionary containing the latest price pairs if full is set to
+		false:
+		
+		{fsym1: {tsym1: ..., tsym2:..., ...},
+		 fsym2: {...},
+		 ...}
 
+		or full trading info dictionaries for all the price pairs in the other
+		case:
 
-
+		{fsym1: {tsym1: {'CHANGE24HOUR': ...,
+		 				 'CHANGEPCT24HOUR': ...,
+ 	                     'FLAGS': ...,
+				 	     'FROMSYMBOL': ...,
+					 	 'HIGH24HOUR': ...,
+					 	 'LASTMARKET': ...,
+					 	 'LASTTRADEID': ...,
+					 	 'LASTUPDATE': ..., 
+					 	 'LASTVOLUME': ...,
+					 	 'LASTVOLUMETO': ...,
+					 	 'LOW24HOUR': ...,
+					 	 'MARKET' ...,
+						 'MKTCAP': ...,
+						 'OPEN24HOUR': ...,
+						 'PRICE': ...,
+					 	 'SUPPLY': ...,
+					 	 'TOSYMBOL': ...,
+					 	 'TYPE': ..., 
+					 	 'VOLUME24HOUR': ...,
+					 	 'VOLUME24HOURTO': ...},
+				 tsym2: ..., ...},
+		fsym2: {...},
+		...}
 	"""
 
 	# select API function based on 'full' parameter value
@@ -60,6 +58,12 @@ def get_latest_price(fsyms, tsyms, e='all', try_conversion=True, full=False,
 		func = 'pricemulti'
 	else:
 		func = 'pricemultifull'
+
+	# convert single fsym and tsym input to single element lists
+	if not isinstance(fsyms, list):
+		fsyms = [fsyms]
+	if not isinstance(tsyms, list):
+		tsyms = [tsyms]
 
 	# load data
 	url = build_url(func, fsyms=fsyms, tsyms=tsyms, e=e, 
@@ -75,8 +79,8 @@ def get_latest_price(fsyms, tsyms, e='all', try_conversion=True, full=False,
 	return data
 
 
-def get_latest_average(fsym, tsym, markets='all', try_conversion=True, 
-                       format='raw'):
+def get_current_trading_info(fsym, tsym, markets='all', try_conversion=True, 
+                       		 format='raw'):
 	"""
 	Get the latest trading info of the requested pair as a volume weighted 
 	average based on the markets requested.
@@ -111,16 +115,12 @@ def get_latest_average(fsym, tsym, markets='all', try_conversion=True,
 		 'LASTVOLUME': ...}
 	"""
 	
-	# build url 
+	# load data 
 	url = build_url('generateAvg', fsym=fsym, tsym=tsym, markets=markets,
 	                try_conversion=try_conversion)
+	data = load_data(url)
 
-	# http request
-	r = requests.get(url)
-
-	# decode to json
-	data = r.json()
-
+	# select format to return
 	if format == 'raw':
 		data = data['RAW']
 	elif format == 'display':
@@ -129,8 +129,8 @@ def get_latest_average(fsym, tsym, markets='all', try_conversion=True,
 	return data
 
 
-def get_day_average(fsym, tsym, e='all', try_conversion=True, 
-                    avgType='HourVWAP', UTCHourDiff=0):
+def get_day_average_price(fsym, tsym, e='all', try_conversion=True, 
+                    	  avg_type='HourVWAP', utc_hour_diff=0):
 	"""
 	Get the day average price of a currency pair.
 
@@ -139,10 +139,10 @@ def get_day_average(fsym, tsym, e='all', try_conversion=True,
 		tsym: TO symbol.
 		e: Default returns average price across all exchanges. Can be set to the
 			name of a single exchange.
-		avgType: 'HourVWAP' returns a volume weighted average of the hourly
+		avg_type: 'HourVWAP' returns a volume weighted average of the hourly
 			close price. The other option 'MidHighLow' gives the average between
 			the 24 hour high and low.
-		UTCHourdiff: 
+		utc_hour_diff: Pass hour difference to UTC for different time zone.
 
 		# add 'toTs' parameter
 		#
@@ -150,34 +150,26 @@ def get_day_average(fsym, tsym, e='all', try_conversion=True,
 		#
 	
 	Returns:
-		'ConversionType' information
-		...
-
-
+		Day average price as float.
 	"""
 
-	# build url
+	# load data
 	url = build_url('dayAvg', fsym=fsym, tsym=tsym, e=e, 
-	                try_conversion=try_conversion, avgType=avgType, 
-	                UTCHourDiff=UTCHourDiff)
-
-	# http request
-	r = requests.get(url)
-
-	# decode to json
-	data = r.json()
+	                try_conversion=try_conversion, avg_type=avg_type, 
+	                utc_hour_diff=utc_hour_diff)
+	data = load_data(url)
 
 	# remove 'ConversionType' information
-	#del data['ConversionType']
+	del data['ConversionType']
 	
-	return {fsym: data}
+	return data[tsym]
 
 
 def get_historical_eod_price(fsym, tsyms, ts, markets='all', try_conversion=True):
 	"""Get end of day price for cryptocurrency based on the requested timestamp.
 
 	Args:
-		fsym: From symbol.
+		fsym: FROM symbol.
 		tsyms: List of TO symbols.
 		ts: Unix timestamp.
 		markets:
@@ -195,15 +187,18 @@ def get_historical_eod_price(fsym, tsyms, ts, markets='all', try_conversion=True
 	return data
 
 
-def get_historical_minute_price(fsym, tsym, e='all', try_conversion=True,
-                                aggregate=1, limit=1440, to_ts=False):
+def get_historical_minute_price(fsym, tsym, price='full', e='all', 
+                                try_conversion=True, aggregate=1, limit=1440, 
+                                to_ts=False):
 	"""Get minute historical price and volumne information about the requested
 	currency pair. Available data is limited to the last 7 days.
 	
 
 	Args:
-		fsym: From symbol.
-		tsym: To symbol.
+		fsym: FROM symbol.
+		tsym: TO symbol.
+		price: Select price or volume information to return. Default of 'full'
+			returns all of them.
 		e: Default returns average price across all exchanges. Can be set to the
 		   name of a single exchange. CCCAGG = Cryptocompare Aggregate
 		tryConversion:
@@ -222,13 +217,23 @@ def get_historical_minute_price(fsym, tsym, e='all', try_conversion=True,
 		  {...},
 		  ...]
 	"""
+
+	# load data
 	url = build_url('histominute', fsym=fsym, tsym=tsym, e=e, 
 	                try_conversion=try_conversion, aggregate=aggregate, 
 	                limit=limit, to_ts=to_ts)
 	data = load_data(url)
+	price_data = data['Data']
 
-	return data['Data']
+	# convert timestamps to nice date format
+	for p in price_data:
+		p['time'] = timestamp_to_date(p['time'])
 
+	# set return information
+	if price == 'full':
+		return price_data
+	else:
+		return [{'time': p['time'], price: p[price]} for p in price_data]
 
 def get_historical_hour_price(fsym, tsym, e='all', try_conversion=True,
                               aggregate=1, limit=168, to_ts=False):
@@ -236,8 +241,8 @@ def get_historical_hour_price(fsym, tsym, e='all', try_conversion=True,
 	currency pair.
 	
 	Args:
-		fsym: From symbol.
-		tsym: To symbol.
+		fsym: FROM symbol.
+		tsym: TO symbol.
 		e: Default returns average price across all exchanges. Can be set to the
 		   name of a single exchange. CCCAGG = Cryptocompare Aggregate
 		try_conversion:
@@ -254,12 +259,23 @@ def get_historical_hour_price(fsym, tsym, e='all', try_conversion=True,
 		  {...},
 		  ...]
 	"""
+
+	# load data
 	url = build_url('histohour', fsym=fsym, tsym=tsym, e=e, 
 	                try_conversion=try_conversion, aggregate=aggregate, 
 	                limit=limit, to_ts=to_ts)
 	data = load_data(url)
+	price_data = data['Data']
 
-	return data['Data']
+	# convert timestamps to nice date format
+	for p in price_data:
+		p['time'] = timestamp_to_date(p['time'])
+
+	# set return information
+	if price == 'full':
+		return price_data
+	else:
+		return [{'time': p['time'], price: p[price]} for p in price_data]
 
 
 def get_historical_day_price():
@@ -267,8 +283,8 @@ def get_historical_day_price():
 	currency pair.
 	
 	Args:
-		fsym: From symbol.
-		tsym: To symbol.
+		fsym: FROM symbol.
+		tsym: TO symbol.
 		e: Default returns average price across all exchanges. Can be set to the
 		   name of a single exchange. CCCAGG = Cryptocompare Aggregate
 		try_conversion:
@@ -285,50 +301,66 @@ def get_historical_day_price():
 		  {...},
 		  ...]
 	"""
+
+	# load data
 	url = build_url('histoday', fsym=fsym, tsym=tsym, e=e, 
 	                try_conversion=try_conversion, aggregate=aggregate, 
 	                limit=limit, to_ts=to_ts)
 	data = load_data(url)
+	price_data = data['Data']
+	
+	# convert timestamps to nice date format
+	for p in price_data:
+		p['time'] = timestamp_to_date(p['time'])
 
-	return data['Data']
+	# set return information
+	if price == 'full':
+		return price_data
+	else:
+		return [{'time': p['time'], price: p[price]} for p in price_data]
 
 
 if __name__ == "__main__":
 
 	# print("Examples get_latest_price()")
 	# print("--------------------------------")
-	
-	# print(get_latest_price(["BTC"], ["EUR", "USD", "ETH"]))
+	# print(get_latest_price("BTC", ["EUR", "USD", "ETH"]))
 	# print()
 
-	# print(get_latest_price(["ETH"], ["EUR"], e="Kraken"))
+	# print(get_latest_price(["ETH", "BTC"], ["USD"]))
+	# print()
+
+	# print(get_latest_price("ETH", ["EUR"], e="Kraken"))
 	# print()
 
 	# print(get_latest_price(["ETH", "BTC", "DASH"], ["EUR", "USD"]))
 	# print()
 
-	# print(get_latest_price(["ETH"], ["EUR", "BTC"], full=True))
+	# print(get_latest_price("ETH", ["EUR", "BTC"], full=True))
 	# print()
 
-	# print(get_latest_price(["ETH"], ["EUR", "BTC"], full=True, format="display"))
+	# print(get_latest_price("ETH", ["EUR", "BTC"], full=True, format="display"))
 	# print()
 
-	# print("Examples get_latest_average()")
+	# print("Examples get_current_trading_info()")
 	# print("--------------------------------")
-	# print(get_latest_average("BTC", "USD", markets=["Poloniex"]))
+	# print(get_current_trading_info("ETC", "USD"))
 	# print()
 
-	# print(get_latest_average("BTC", "USD", 
-	#                          markets=["Poloniex", "Kraken", "Coinbase"], 
-	#                          format='display'))
+	# print(get_current_trading_info("BTC", "USD", markets=["Poloniex"]))
 	# print()
 
-	# print("Examples get_day_average")
+	# print(get_current_trading_info("BTC", "USD", 
+	#                          	   markets=["Poloniex", "Kraken", "Coinbase"], 
+	#                                format='display'))
+	# print()
+
+	# print("Examples get_day_average_price")
 	# print("--------------------------------")
-	# print(get_day_average("ETH", "EUR"))
+	# print(type(get_day_average_price("ETH", "EUR")))
 	# print()
 
-	# print(get_day_average("DGB", "XLM", avgType="MidHighLow", UTCHourDiff=-8))
+	# print(get_day_average_price("DGB", "XLM", avg_type="MidHighLow", utc_hour_diff=-8))
 	# print()
 
 	# print("Examples get_historical_eod_price()")
@@ -347,22 +379,29 @@ if __name__ == "__main__":
 	print("--------------------------------")
 	#print(
 	price_data = get_historical_minute_price('BTC', 'USD', aggregate=5, 
-	                                         limit=300)
+	                                         limit=100)
 
-	for p in price_data:
-		print(timestamp_to_date(p['time']), p['high'])
+	#for p in price_data:
+	#	print(timestamp_to_date(p['time']), p['high'])
+	#print()
+
+	print(price_data)
 	print()
 
-	print("Examples get_historical_minute_price()")
-	print("--------------------------------")
-	price_data = get_historical_hour_price('ETH', 'EUR')
-
-	for p in price_data:
-		print(timestamp_to_date(p['time']), p['high'])
+	price_data = get_historical_minute_price('BTC', 'USD', price='open')
+	print(price_data)
 	print()
 
-	price_data = get_historical_hour_price('ETH', 'EUR', limit=2000)
+	# print("Examples get_historical_minute_price()")
+	# print("--------------------------------")
+	# price_data = get_historical_hour_price('ETH', 'EUR')
 
-	for p in price_data:
-		print(timestamp_to_date(p['time']), p['high'])
-	print()
+	# for p in price_data:
+	# 	print(timestamp_to_date(p['time']), p['high'])
+	# print()
+
+	# price_data = get_historical_hour_price('ETH', 'EUR', limit=2000)
+
+	# for p in price_data:
+	# 	print(timestamp_to_date(p['time']), p['high'])
+	# print()

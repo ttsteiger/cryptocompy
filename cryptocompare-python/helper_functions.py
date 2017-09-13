@@ -9,8 +9,10 @@ def build_url(func, **kwargs):
 	"""
 	"""
 
-	if func in ['coinlist', 'coinsnapshot']:
+	if func in ['coinlist', 'coinsnapshot', 'miningequipment']:
 		url = "https://www.cryptocompare.com/api/data/{}?".format(func)
+	elif func in ['exchanges', 'volumes', 'pairs']:
+		url = "https://min-api.cryptocompare.com/data/top/{}?".format(func)
 	else:
 		url = "https://min-api.cryptocompare.com/data/{}?".format(func)
 	
@@ -37,17 +39,22 @@ def build_url(func, **kwargs):
 		elif key == 'try_conversion' and not value:
 			url_parts.append("tryConversion=false")
 		
+		# markets
 		elif key == 'markets' and value != 'all':
 			url_parts.append("markets={}".format(",".join(value)))
-		elif key == 'avgType' and value != 'HourVWAP':
+		elif key == 'markets' and value == 'all':
+			url_parts.append("markets={}".format('CCCAGG'))
+
+		elif key == 'avg_type' and value != 'HourVWAP':
 			url_parts.append("avgType={}".format(value))
-		elif key == 'UTCHourDiff' and value != 0:
+		elif key == 'utc_hour_diff' and value != 0:
 			url_parts.append("UTCHourDiff={}".format(value))
 		elif key == 'ts':
 			url_parts.append("ts={}".format(value))
 		elif key == 'aggregate' and value != 1:
 			url_parts.append("aggregate={}".format(value))
-		elif key == 'limit' and value != 1440:
+		
+		elif key == 'limit':
 			url_parts.append("limit={}".format(value))
 
 	# put url together
