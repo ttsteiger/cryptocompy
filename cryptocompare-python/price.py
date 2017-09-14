@@ -165,14 +165,14 @@ def get_day_average_price(fsym, tsym, e='all', try_conversion=True,
 	return data[tsym]
 
 
-def get_historical_eod_price(fsym, tsyms, ts, markets='all', try_conversion=True):
+def get_historical_eod_price(fsym, tsyms, ts, e='all', try_conversion=True):
 	"""Get end of day price for cryptocurrency based on the requested timestamp.
 
 	Args:
 		fsym: FROM symbol.
 		tsyms: List of TO symbols.
 		ts: Unix timestamp.
-		markets:
+		e:
 		try_conversion: 
 
 	Returns:
@@ -181,7 +181,7 @@ def get_historical_eod_price(fsym, tsyms, ts, markets='all', try_conversion=True
 
 	# load data
 	url = build_url("pricehistorical", fsym=fsym, tsyms=tsyms, ts=ts, 
-	                markets=markets, try_conversion=try_conversion)
+	                e=e, try_conversion=try_conversion)
 	data = load_data(url)
 
 	return data
@@ -363,34 +363,38 @@ if __name__ == "__main__":
 	# print(get_day_average_price("DGB", "XLM", avg_type="MidHighLow", utc_hour_diff=-8))
 	# print()
 
-	# print("Examples get_historical_eod_price()")
-	# print("--------------------------------")
-	# print(get_historical_eod_price("BTC", ["EUR", "USD", "ETH"], ts=1452680400))
-	# print()
-
-	# print(get_historical_eod_price("DASH", ["USD"], ts=1492689600))
-	# print()
-
-	# print(get_historical_eod_price("LTC", ["BTC", "EUR"], ts=1500768000, 
-	#                            markets=["Kraken"]))
-	# print()
-
-	print("Examples get_historical_minute_price()")
+	print("Examples get_historical_eod_price()")
 	print("--------------------------------")
-	#print(
-	price_data = get_historical_minute_price('BTC', 'USD', aggregate=5, 
-	                                         limit=100)
+	print(get_historical_eod_price("BTC", ["EUR", "USD", "ETH"], ts=1452680400))
+	print()
+
+	print(get_historical_eod_price("DASH", ["USD"], ts=1492689600))
+	print()
+
+	print(get_historical_eod_price("LTC", ["BTC", "EUR"], ts=1500768000, 
+	                           e="Kraken"))
+	print()
+
+	print(get_historical_eod_price("LTC", ["BTC", "EUR"], ts=1500768000, 
+	                           e="Coinbase"))
+	print()
+
+	# print("Examples get_historical_minute_price()")
+	# print("--------------------------------")
+	# #print(
+	# price_data = get_historical_minute_price('BTC', 'USD', aggregate=5, 
+	#                                          limit=100)
 
 	#for p in price_data:
 	#	print(timestamp_to_date(p['time']), p['high'])
 	#print()
 
-	print(price_data)
-	print()
+	# print(price_data)
+	# print()
 
-	price_data = get_historical_minute_price('BTC', 'USD', price='open')
-	print(price_data)
-	print()
+	# price_data = get_historical_minute_price('BTC', 'USD', price='open')
+	# print(price_data)
+	# print()
 
 	# print("Examples get_historical_minute_price()")
 	# print("--------------------------------")
