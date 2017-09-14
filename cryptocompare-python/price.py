@@ -3,7 +3,7 @@
 from helper_functions import build_url, load_data, timestamp_to_date
 
 
-def get_latest_price(fsyms, tsyms, e='all', try_conversion=True, full=False, 
+def get_current_price(fsyms, tsyms, e='all', try_conversion=True, full=False, 
                      format='raw'):
 	"""Get latest full or compact price information in display or raw format for 
 	the specified FROM-TO currency pairs.
@@ -170,7 +170,7 @@ def get_historical_eod_price(fsym, tsyms, ts, e='all', try_conversion=True):
 
 	Args:
 		fsym: FROM symbol.
-		tsyms: List of TO symbols.
+		tsyms: Single string or list of TO symbols.
 		ts: Unix timestamp.
 		e:
 		try_conversion: 
@@ -178,6 +178,10 @@ def get_historical_eod_price(fsym, tsyms, ts, e='all', try_conversion=True):
 	Returns:
 
 	"""
+
+	# convert single fsym and tsym input to single element lists
+	if not isinstance(tsyms, list):
+		tsyms = [tsyms]
 
 	# load data
 	url = build_url("pricehistorical", fsym=fsym, tsyms=tsyms, ts=ts, 
@@ -278,7 +282,8 @@ def get_historical_hour_price(fsym, tsym, e='all', try_conversion=True,
 		return [{'time': p['time'], price: p[price]} for p in price_data]
 
 
-def get_historical_day_price():
+def get_historical_day_price(fsym, tsym, e='all', try_conversion=True, 
+							 aggregate=1, limit=30, to_ts=False):
 	"""Get day historical price and volumne information about the requested
 	currency pair.
 	
@@ -368,7 +373,7 @@ if __name__ == "__main__":
 	print(get_historical_eod_price("BTC", ["EUR", "USD", "ETH"], ts=1452680400))
 	print()
 
-	print(get_historical_eod_price("DASH", ["USD"], ts=1492689600))
+	print(get_historical_eod_price("DASH", "USD", ts=1492689600))
 	print()
 
 	print(get_historical_eod_price("LTC", ["BTC", "EUR"], ts=1500768000, 
