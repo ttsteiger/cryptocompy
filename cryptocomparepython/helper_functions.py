@@ -3,6 +3,7 @@
 import datetime
 import json
 import requests
+import time
 
 
 def build_url(func, **kwargs):
@@ -13,6 +14,8 @@ def build_url(func, **kwargs):
 		url = "https://www.cryptocompare.com/api/data/{}?".format(func)
 	elif func in ['exchanges', 'volumes', 'pairs']:
 		url = "https://min-api.cryptocompare.com/data/top/{}?".format(func)
+	elif func in ['minute', 'hour', 'day']:
+		url = "https://min-api.cryptocompare.com/data/histo{}?".format(func)
 	else:
 		url = "https://min-api.cryptocompare.com/data/{}?".format(func)
 	
@@ -87,3 +90,29 @@ def timestamp_to_date(ts):
 		"""
 		return datetime.datetime.fromtimestamp(int(ts)
 		                                       ).strftime('%Y-%m-%d %H:%M:%S')
+
+
+def date_to_timestamp(date):
+	"""
+	
+
+	Args:
+		date: Date as string with these formats: "Y-m-d", "Y-m-d H-M-S".
+	Returns:
+	
+	"""
+	
+	# format input string if only date but no time is provided
+	if len(date) == 10:
+		date = "{} 00:00:00".format(date)
+
+	return time.mktime(time.strptime(date, '%Y-%m-%d %H:%M:%S')) # 
+
+
+
+
+if __name__ == "__main__":
+	date = timestamp_to_date('1492689600')
+	ts = date_to_timestamp(date)
+
+	print(date, ts)
