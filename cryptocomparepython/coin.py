@@ -3,7 +3,7 @@
 import json
 import requests
 
-from helper_functions import build_url, load_data
+from .helper_functions import build_url, load_data
 
 def get_coin_list(coins='all'):
 	"""
