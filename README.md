@@ -1,5 +1,6 @@
 
-# cryptocomparepython
+# cryptocompy
+
 Simple wrapper for the public CryptoCompare API.
 
 Cryptocompare API:
@@ -9,18 +10,18 @@ https://www.cryptocompare.com/api
 
 * [ToDo](#ToDo)
 * [Installation](#Installation)
-* [Code of Conduct](#Code of Conduct)
+* [Code of Conduct](#code-of-conduct)
 * [Contributing](#Contributing)
 * [Documentation](#Documentation)
-    * [coin.py](#coin.py)
+    * [coin.py](#coinpy)
         * [get_coin_list](#get_coin_list)
         * [get_coin_snapshot](#get_coin_snapshot)
-    * [price.py](#price.py)
+    * [price.py](#pricepy)
         * [get_current_price](#get_current_price)
         * [get_current_trading_info](#get_current_trading_info)
         * [get_day_average_price](#get_day_average_price)
-    * [mining.py](#mining.py)
-    * [top.py](#top.py)
+    * [mining.py](#miningpy)
+    * [top.py](#toppy)
 
 ## ToDo:
 
