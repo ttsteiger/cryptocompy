@@ -5,7 +5,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-cryptocomparepython-env/
+cryptocompy-env/
 dist/
 *.egg-info/
 

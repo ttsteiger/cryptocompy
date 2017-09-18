@@ -9,18 +9,16 @@ https://www.cryptocompare.com/api
 
 * [ToDo](#ToDo)
 * [Installation](#Installation)
-* [Code of Conduct](#code-of-conduct)
+* [Code of Conduct](#Code of Conduct)
 * [Contributing](#Contributing)
 * [Documentation](#Documentation)
-    * [coin.py](#coinpy)
+    * [coin.py](#coin.py)
         * [get_coin_list](#get_coin_list)
         * [get_coin_snapshot](#get_coin_snapshot)
-    * [price.py](#pricepy)
+    * [price.py](#price.py)
         * [get_current_price](#get_current_price)
         * [get_current_trading_info](#get_current_trading_info)
         * [get_day_average_price](#get_day_average_price)
-		* [get_historical_eod_price](#get_historical_eod_price)
-		* [get_historical_data](get_historical_data#)
     * [mining.py](#mining.py)
     * [top.py](#top.py)
 
@@ -102,7 +100,7 @@ Get general coin information for Bitcoin and Ethereum.
 
 
 ```python
-from cryptocomparepython import coin
+from cryptocompy import coin
 
 coin_data = coin.get_coin_list(coins=["BTC", "ETH"])
 coin_data
@@ -327,7 +325,7 @@ Get the current BTC prices averaged across all exchanges in EUR, USD and ETH.
 
 
 ```python
-from cryptocomparepython import price
+from cryptocompy import price
 
 price_data = price.get_current_price("BTC", ["EUR", "USD", "ETH"])
 price_data
