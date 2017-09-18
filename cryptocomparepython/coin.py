@@ -11,29 +11,37 @@ def get_coin_list(coins='all'):
 	cryptocompare.com.
 	
 	Args:
-		coins: Default value of 'all' returns complete list. Otherwise a list of 
-			coin symbols can be used.
+		coins: Default value of 'all' returns information about all the coins
+			available on the site. Otherwise a single string or list of coin 
+			symbols can be used.
 
 	Returns:
 		The function returns a dictionairy containing individual dictionairies 
 		for the coins specified by the input. The key of the top dictionary 
 		corresponds to the coin symbol. Each coin dictionary has the following 
 		structure:
-			{'Algorithm' : ...,
-			 'CoinName': ...,
-			 'FullName': ...,
-			 'FullyPremined': ...,
-			 'Id': ...,
-			 'ImageUrl': ...,
-			 'Name': ...,
-			 'PreMinedValue': ...,
-			 'ProofType': ...,
-			 'SortOrder': ...,
-			 'TotalCoinsFreeFloat': ...,
-			 'TotalCoinSupply': ...,
-			 'Url': ...}
+		
+			{coin_symbol1: {'Algorithm' : ...,
+	                'CoinName': ...,
+	                'FullName': ...,
+	                'FullyPremined': ...,
+	                'Id': ...,
+	                'ImageUrl': ...,
+	                'Name': ...,
+	                'PreMinedValue': ...,
+	                'ProofType': ...,
+	                'SortOrder': ...,
+	                'TotalCoinsFreeFloat': ...,
+	                'TotalCoinSupply': ...,
+				    'Url': ...},
+	 		coin_symbol2: {...},
+ 			...}
 	"""
 	
+	# convert single coins input to single element lists
+	if not isinstance(coins, list) and coins != 'all':
+		coins = [coins]
+
 	# load data
 	url = build_url('coinlist')
 	data = load_data(url)['Data']
@@ -55,34 +63,39 @@ def get_coin_snapshot(fsym, tsym):
 		tsym: TO symbol.
 	
 	Returns:
-		'ConversionType' information
+		The function returns a dictionairy containing blockain as well as 
+		trading information from the different exchanges were the specified 
+		currency pair is available.
+
+		{'AggregatedData': dict,
+ 		 'Algorithm': ...,
+		 'BlockNumber': ...,
+		 'BlockReward': ...,
+		 'Exchanges': [dict1, dict2, ...],
+		 'NetHashesPerSecond': ...,
+		 'ProofType': ...,
+		 'TotalCoinsMined': ...}
+
+		dict = {'FLAGS': ...,
+		        'FROMSYMBOL': ...,
+		        'HIGH24HOUR': ...,
+		        'LASTMARKET': ...,
+		        'LASTTRADEID': ...,
+		        'LASTUPDATE': ...,
+		        'LASTVOLUME': ...,
+		        'LASTVOLUMETO': ...,
+		        'LOW24HOUR': ...,
+		        'MARKET': ...,
+		        'OPEN24HOUR': ...,
+		        'PRICE': ...,
+		        'TOSYMBOL': ...,
+		        'TYPE': ...,
+		        'VOLUME24HOUR': ...,
+		        'VOLUME24HOURTO': ...}
 	"""
 
 	# load data
 	url = build_url('coinsnapshot', fsym=fsym, tsym=tsym)
 	data = load_data(url)['Data']
 
-	print(url)
-
 	return data
-
-
-if __name__ == "__main__":
-
-	print("Examples get_coin_list()")
-	print("--------------------------------")
-
-	# example 1
-	coin_data = get_coin_list(coins=["BTC", "ETH"])
-	print(coin_data)
-	print()
-
-	# example 2
-	coin_data = get_coin_list()
-	print(list(coin_data.keys())[:10])
-	print()
-
-	print("Examples get_coin_snapshot()")
-	print("--------------------------------")
-	print(get_coin_snapshot("LTC", "EUR"))
-	print()
