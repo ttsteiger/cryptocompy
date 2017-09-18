@@ -9,7 +9,7 @@ https://www.cryptocompare.com/api
 
 * [ToDo](#ToDo)
 * [Installation](#Installation)
-* [Code of Conduct](#Code-of-Conduct)
+* [Code of Conduct](#code-of-conduct)
 * [Contributing](#Contributing)
 * [Documentation](#Documentation)
     * [coin.py](#coinpy)
