@@ -11,4 +11,4 @@ setup(name='cryptocompy',
       download_url='https://github.com/ttsteiger/cryptocompare-python/archive/0.1.1.dev1.tar.gz',
       license='MIT',
       python_requires='>=3',
-      install_requires=[],)
+      install_requires=['requests'],)

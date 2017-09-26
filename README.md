@@ -976,7 +976,7 @@ avg_cost
 #### get_mining_equipment
 
 ```python
-* get_mining_equipment()
+get_mining_equipment()
 ```
 
 Get all the mining equipment information available.
