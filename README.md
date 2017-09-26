@@ -21,7 +21,12 @@ https://www.cryptocompare.com/api
         * [get_current_trading_info](#get_current_trading_info)
         * [get_day_average_price](#get_day_average_price)
     * [mining.py](#miningpy)
+        * [get_mining_contracts](#get_mining_contracts)
+        * [get_mining_equipment](#get_mining_equipment)
     * [top.py](#toppy)
+        * [get_top_exchanges](#get_top_exchanges)
+        * [get_top_coins](#get_top_coins)
+        * [get_top_pairs](#get_top_pairs)
 
 ## ToDo:
 
@@ -32,6 +37,10 @@ https://www.cryptocompare.com/api
 - throw warnings for conversions
 - add toTs parameter to price functions
 - improve date handling in historical price functions
+- add folder with some more complex example code (for eg. compare average mining equipment prices graphically)
+
+- both mining contracts and equipment calls return same message -> tell CC Support?
+
 
 ## Installation
 
@@ -851,7 +860,195 @@ price.get_historical_data('XRP', 'USD', 'day', info='close', aggregate=1, limit=
 ---
 
 ### mining.py
+
+To access these functions, you can import them in the following way:
+
+
+```python
+from cryptocompy import mining
+```
+
+---
+
+#### get_mining_contracts
+
+```python
+get_mining_contracts()
+```
+
+Get all the mining contracts information available.
+
+*Returns:*
+
+This function returns two major dictionaries. The first one contains information about the coins for which mining contracts data is available.
+
+`coin_data`: 
+
+```
+{symbol1: {'BlockNumber': ...,
+           'BlockReward': ...,
+           'BlockRewardReduction': ...,
+           'BlockTime': ...,
+           'DifficultyAdjustment': ...,
+           'NetHashesPerSecond': ...,
+           'PreviousTotalCoinsMined': ...,
+           'PriceUSD': ...,
+           'Symbol': ...,
+           'TotalCoinsMined': ...},
+ symbol2: {...},
+ ...}
+```
+
+The other one contains all the available mining contracts.
+
+`mining_data`: 
+
+```
+{id1: {'AffiliateURL': ...,
+       'Algorithm': ...,
+       'Company': ...,
+       'ContractLength': ...,
+       'Cost': ...,
+       'CurrenciesAvailable': ...,
+       'CurrenciesAvailableLogo': ...,
+       'CurrenciesAvailableName': ...,
+       'Currency': ...,
+       'FeePercentage': ...,
+       'FeeValue': ...,
+       'FeeValueCurrency': ...,
+       'HashesPerSecond': ...,
+       'Id': id1,
+       'LogoUrl': ...,
+       'Name': ...,
+       'ParentId': ...,
+       'Recommended': ...,
+       'Sponsored': ...,
+       'Url': ...},
+ id2: {...},
+ ...}
+
+```
+
+*Example 1:*
+
+Get the symbols of all the coins for which mining contracts information is available.
+
+
+```python
+coin_data, _ = mining.get_mining_contracts()
+
+sorted(list(coin_data.keys()))
+```
+
+
+
+
+    ['BCH', 'BTC', 'DASH', 'ETC', 'ETH', 'LTC', 'XMR', 'ZEC']
+
+
+
+*Example 2:*
+
+Calculate the average cost of all contracts available for LTC.
+
+
+```python
+_, mining_data = mining.get_mining_contracts()
+
+costs = []
+for id, c in mining_data.items():
+    if c['CurrenciesAvailable'] == 'LTC':
+        costs.append(float(c['Cost']))
+
+avg_cost = sum(costs) / len(costs)
+avg_cost
+```
+
+
+
+
+    1630.4142857142856
+
+
+
+---
+
+#### get_mining_equipment
+
+```python
 * get_mining_equipment()
+```
+
+Get all the mining equipment information available.
+
+*Returns:*
+
+This function returns two major dictionaries. The first one contains information about the coins for which mining equipment data is available.
+
+`coin_data`: 
+
+```
+{symbol1: {'BlockNumber': ...,
+           'BlockReward': ...,
+           'BlockRewardReduction': ...,
+           'BlockTime': ...,
+           'DifficultyAdjustment': ...,
+           'NetHashesPerSecond': ...,
+           'PreviousTotalCoinsMined': ...,
+           'PriceUSD': ...,
+           'Symbol': ...,
+           'TotalCoinsMined': ...},
+ symbol2: {...},
+ ...}
+```
+
+The other one contains all the available mining equipment.
+
+`mining_data`:
+
+```
+{id1: {'AffiliateURL': ...,
+       'Algorithm': ...,
+       'Company': ...,
+       'Cost': ...,
+       'CurrenciesAvailable': ...,
+       'CurrenciesAvailableLogo': ...,
+       'CurrenciesAvailableName': ...,
+       'Currency': ...,
+       'EquipmentType': ...,
+       'HashesPerSecond': ...,
+       'Id': ...,
+       'LogoUrl': ...,
+       'Name': ...,
+       'ParentId': ...,
+       'PowerConsumption': ...,
+       'Recommended': ...,
+       'Sponsored': ...,
+       'Url': ...},
+ id2: {...},
+ ...}
+```
+
+*Example 1:*
+
+Get the different equipment categories that are present.
+
+
+```python
+_, mining_data = mining.get_mining_equipment()
+
+equipment_types = set()
+for id, m in mining_data.items():
+    equipment_types.add(m['EquipmentType'])
+
+equipment_types = sorted(list(equipment_types))
+equipment_types
+```
+
+
+
+
+    ['ASIC', 'Chip', 'GPU', 'Refurbished GPU', 'Rig', 'Rig Bundle', 'USB']
 
 
 
