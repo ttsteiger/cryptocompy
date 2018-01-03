@@ -44,7 +44,7 @@ https://www.cryptocompare.com/api
 
 ## Installation
 
-pip install cryptocompy
+	pip install cryptocompy
 
 ## Code of Conduct
 
