@@ -32,7 +32,6 @@ https://www.cryptocompare.com/api
 
 - add all get functions
 - complete docstrings
-- create readme with examples
 - error handling for http requests
 - throw warnings for conversions
 - add toTs parameter to price functions
@@ -41,6 +40,7 @@ https://www.cryptocompare.com/api
 
 - both mining contracts and equipment calls return same message -> tell CC Support?
 
+- installation through pip does not install requests qutomatically
 
 ## Installation
 
