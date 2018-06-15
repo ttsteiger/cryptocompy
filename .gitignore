@@ -12,3 +12,6 @@ setup.cfg
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# PyCharm
+.idea/
