@@ -45,9 +45,9 @@ def build_url(func, **kwargs):
 		
 		# markets
 		elif key == 'markets' and value != 'all':
-			url_parts.append("markets={}".format(",".join(value)))
+			url_parts.append("e={}".format(",".join(value)))
 		elif key == 'markets' and value == 'all':
-			url_parts.append("markets={}".format('CCCAGG'))
+			url_parts.append("e={}".format('CCCAGG'))
 
 		elif key == 'avg_type' and value != 'HourVWAP':
 			url_parts.append("avgType={}".format(value))
