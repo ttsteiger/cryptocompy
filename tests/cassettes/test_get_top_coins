@@ -1,0 +1,47 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://min-api.cryptocompare.com/data/top/volumes?tsym=USD&limit=20
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3VW328iNxD+V9A+UYlaM2N7PM5bAjSJxGYjIFEuVR9ouuqhknAKXNXTKf/7zULg
+        bOLuwyLG9n6fZ7758b0aLbaL6uz379XsU33RTKqz6uFifjcbVYNqdnd7O/lUncGg+u1uMrk5r8fp
+        8un/61F19isOqvtmclePyV01d9N5U51FcA4JAQxYRnTyNkjQLubDBAoDRfY+R7xYbp/Wy5deX/f+
+        8hP43fyOXCEKVR/RMYgnYhcMBmCCmKGP51cpOhAF74iNZ+SMw3j7uX1tvz73+nokIXGwH1gEBl9i
+        4axFCeRNjJYtWMpoPExvExpRHxQPIbrc89PbXl9fCfz+4A7Zg8USMni2wWM0Hj0zR87dP7z64H5C
+        oyGLIWIxDMPF5rPGYnj1MRa7tQMhArIWCpTIe1Ie1li0nqPYjNEkE4QXpe2CRo/0IiEjNFlu270w
+        JpkwDvYDESsgJc+oLsRBNCFEUm3YXJjjZpZJA523onSNMNtcG81MZdHMUlnsDu91yayhKeFbhyLB
+        dsKMzmmUTqSZJQa4SCACZVUOV4vNZvnUqXNYUOdh/agVS67AyDkK6m3VaBQU8Bmfm3GT8NE77Z6M
+        jm7p9fWVMNif2ushWC7FwSJa9axhiDGQhBz2YVKnbpAgMXoH3mfIs227Wi1eNT0mdYL+bj4wcIyl
+        axOTJRuM6GN31SJnUE9TBqypYbWcMFLQrRmNev3Svq6VRT1NWOytSZ6WvEC205eYCEGcBWGXkbhu
+        5gkJUsl6CyS5EHXTea+v7wS8sx2lqCHwXAJHrcyOjGC0WgFiyD1wfpOmQh7z/Vr25/8aAWq26b2M
+        d8LArNU2Q3kcp4J3ESQCG8oD/bivPro3ueNjVnac+FKUMWjERD8YrGpcfZzfUXtY5mEBdoQq2Qx+
+        3nYZ1et3uxMCe/PRzQGjlNwcg6YxG1Znd6XxROmj81lai8U6CQGM1WrpnI0Zj9HOC92JhMUo8YLW
+        vFBiABgRTPTAEvV+GYGmvkyF7oBUklGM/miGZvjN83LTXqrS9UzC4N18dIQE50odIKjErDeOCaMK
+        4aQbzqcPWeX7+eSxeF2/LP/r9XV7Goqd9egGBKFYYMDkgtNs03YXNNsET4aSzBOha2WsXVG0+Lhi
+        U7xcr/7qBpTLQlPs1o6EXCBbmhA8EHpvtBVRBNCZ6aQZpAOCZ5UGEBgm8si5NOp2u/i3fd20XTNI
+        Z4XjwpGLpoMtOcd58kH7ona64L0PeXju768TLrYcnPv73nDXmnV3wuHdfJyWBHXKKfUEhcZuWFKC
+        u8e//TGo5t++tDtBDKppu/myftG7aJH/+vTUbjbdV9ar2bfnP9erfT6rpdaFxd/drvPVqrf+p3r7
+        Ae0KV4LyCgAA
+    headers:
+      Access-Control-Allow-Headers: [Content-Type]
+      Access-Control-Allow-Methods: [GET]
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: ['public, max-age=29']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json; charset=UTF-8]
+      CryptoCompare-Cache-HIT: ['false']
+      Date: ['Sun, 30 Sep 2018 08:38:17 GMT']
+      Server: [nginx/1.10.3]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1
