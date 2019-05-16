@@ -253,13 +253,12 @@ def get_historical_data(fsym, tsym, freq, info='full', e='all',
             Using aggregate reduces the maximum number of points that can be
             returned by a factor equal to the chosen bin size.
 
-        # add 'toTs' parameter
-        ######################
-        ######################
-        ######################
-        ######################
-        ######################
-        ######################
+        'toTs': get historical data at a specific date.
+                This parameter can be :
+                    * a datetime.datetime object like :
+                        datetime.datetime(2019, 5, 16, 18, 1, 48)
+                    * a int timestamp like : 1558022508
+                    * a string timestamp like : "1558022508"
 
     Returns:
         List of dictionairies containing the price and volume information for

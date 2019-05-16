@@ -53,7 +53,9 @@ def build_url(func, **kwargs):
         elif key == 'utc_hour_diff' and value != 0:
             url_parts.append("UTCHourDiff={}".format(value))
         elif key == 'to_ts' and value:
-            url_parts.append("toTs={}".format(value))
+            timestamp = to_ts_args_to_timestamp(value)
+            if timestamp:
+                url_parts.append("toTs={}".format(timestamp))
         elif key == 'aggregate' and value != 1:
             url_parts.append("aggregate={}".format(value))
 
