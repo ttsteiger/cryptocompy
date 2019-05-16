@@ -79,6 +79,30 @@ def load_data(url):
     return data
 
 
+def to_ts_args_to_timestamp(to_ts):
+    """ Convert the to_ts arguments into a well formatted timestamp
+
+        The to_ts arguments can come in 3 forms :
+            * as an int : a simple timestamp
+            * as an datetime.datetime object
+            * as a string
+
+        This function return an int, the to_ts argument converted in timestamp
+    """
+    try:
+        if isinstance(to_ts, int):
+            return to_ts
+
+        if isinstance(to_ts, datetime.datetime):
+            return int(to_ts.timestamp())
+
+        if isinstance(to_ts, str):
+            return int(to_ts)
+    except (TypeError, ValueError):
+        return False
+    return False
+
+
 def timestamp_to_date(ts):
     """Convert timestamp to nice date and time format.
 
