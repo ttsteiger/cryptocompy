@@ -188,7 +188,7 @@ def get_historical_eod_price(fsym, tsyms, date, e='all', try_conversion=True):
 	Args:
 		fsym: FROM symbol.
 		tsyms: Single string or list of TO symbols.
-		date: Date as string with this format: "Y-m-d H-M-S".
+		date: Date as string with this format: "Y-m-d H:M:S".
 		e: Default returns average price across all exchanges. Can be set to the
 			name of a single exchange.
 		try_conversion: If the crypto does not trade directly into the toSymbol 

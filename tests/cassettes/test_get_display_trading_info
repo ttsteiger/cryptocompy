@@ -1,0 +1,36 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://min-api.cryptocompare.com/data/generateAvg?fsym=BTC&tsym=USD&e=CCCAGG
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA42RTW7bMBCFr2IMsiQI/v9ox0iu7FQKBYlKkEski7TowvCqp+utMhJtGUyzCHd8
+        8+bNYL4TjOEZqhP0Yfy5T1BBPU8p9qFtgcCPMfbTS38fOyzcpxqlFDdhnprF04V2gooRGMZjvYfK
+        aK8pVwS6MKV5aEJCkWvphLdYyvpT7OYedUaNMFx7WegpQqW40NQa6bXll2IaQ7M/NjhaaG0kExrn
+        5w6hDnEeoRJWME+NEU46Zg3zonQsydx67TFdUK+4ddoRiMP+8RphtFJUeAKHY3vYRKM4ZRL3iM83
+        o7TUubzb7X51nY9XH8Jjuy2mGXWabU8adXUMdbqaGLXWMi6FkobhYaS7mprwst54a8nCmUBznIZu
+        +ZxKXP/+lrTu8Psl5As2uNsZktFByQ4efr//2r2+/YGSHY7YrfwEfIaHYYpkgPBtdkuesGQBaOF/
+        bJiJ5HBFTlZ2UGLL+6/ooGS3VjI/KADmlhUifI8idqwg4Qt4gPQcFMDQzuAzNGBwPn8ALmhp6ngD
+        AAA=
+    headers:
+      Access-Control-Allow-Headers: [Content-Type]
+      Access-Control-Allow-Methods: [GET]
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: ['public, max-age=29']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json; charset=UTF-8]
+      CryptoCompare-Cache-HIT: ['false']
+      Date: ['Sun, 30 Sep 2018 08:53:15 GMT']
+      Server: [nginx/1.10.3]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

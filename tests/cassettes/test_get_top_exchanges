@@ -1,0 +1,33 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.19.1]
+    method: GET
+    uri: https://min-api.cryptocompare.com/data/top/exchanges?fsym=BTC&tsym=USD&limit=5
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA53SsW4CMQwG4HfJjCLHSez4xsJWqUOhU9UhoFBOcBfEHRUV4t2bW6o2G0TK8nv4
+        YjtX9ZqGY+6HpBq1PG82aRjUTC3iGFXzflXpstnF/nOqPrXjtu3TpZS3p9wtv7t1Pkz5al6iMf8G
+        b8tFCb7y4dwldDvVGEBBzewCoWcRcX/Kq6waYjZA4jR6QivCt9k/ep7bfh3LG++mLTBpE6wRma4w
+        VTSCEWMgaCAjxM64yi5tD2PsjvfbKBa0Jc9owBdbfGUbQXQBqNjegGW2lf2STvGRgaNBryF4qUGH
+        jGhZ29LqNOgafD7Ffeof2LAj1k6QAgNDObaShZADsCZfhlI+AN0+bj9Wva0OfAIAAA==
+    headers:
+      Access-Control-Allow-Headers: [Content-Type]
+      Access-Control-Allow-Methods: [GET]
+      Access-Control-Allow-Origin: ['*']
+      Cache-Control: ['public, max-age=29']
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Type: [application/json; charset=UTF-8]
+      CryptoCompare-Cache-HIT: ['false']
+      Date: ['Sun, 30 Sep 2018 08:34:17 GMT']
+      Server: [nginx/1.10.3]
+      Transfer-Encoding: [chunked]
+      Vary: [Accept-Encoding]
+    status: {code: 200, message: OK}
+version: 1

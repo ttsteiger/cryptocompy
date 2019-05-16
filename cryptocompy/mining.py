@@ -69,24 +69,8 @@ def get_mining_equipment():
 	"""Get all the mining equipment information available.
 
 	Returns:
-		This function returns two major dictionaries. The first one contains information about the coins for which mining equipment data is available.
-
-		coin_data: 
-
-			{symbol1: {'BlockNumber': ...,
-			           'BlockReward': ...,
-			           'BlockRewardReduction': ...,
-			           'BlockTime': ...,
-			           'DifficultyAdjustment': ...,
-			           'NetHashesPerSecond': ...,
-			           'PreviousTotalCoinsMined': ...,
-			           'PriceUSD': ...,
-			           'Symbol': ...,
-			           'TotalCoinsMined': ...},
-			 symbol2: {...},
-			 ...}
-
-		The other one contains all the available mining equipment.
+		This function returns one dictionaries.
+		It contains all the available mining equipment.
 
 		mining_data:
 
@@ -114,7 +98,6 @@ def get_mining_equipment():
 	# load data
 	url = build_url('miningequipment')
 	data = load_data(url)
-	coin_data = data['CoinData']
 	mining_data = data['MiningData']
 
-	return coin_data, mining_data
+	return mining_data
