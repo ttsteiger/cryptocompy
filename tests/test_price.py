@@ -1,4 +1,5 @@
 import pytest
+import datetime
 
 from tests.cryptocompy_vcr import cryptocompy_vcr
 
@@ -142,6 +143,21 @@ def test_get_historical_data():
     data['open'] == 6655.99
     data['volumefrom'] == 5.21
     data['volumeto'] == 34791.94
+
+
+@cryptocompy_vcr.use_cassette()
+@pytest.mark.parametrize("to_ts", [
+    datetime.datetime(2019, 5, 16, 18, 1, 48),
+    1558022508,
+    "1558022508",
+])
+def test_get_historical_data_timestamp(to_ts):
+
+    datas = price.get_historical_data('BTC', 'USD', 'minute', to_ts=to_ts)
+
+    assert len(datas) == 1441
+    data = datas[0]
+    assert data['time'] == '2019-05-15 18:01:00'
 
 
 @cryptocompy_vcr.use_cassette()
